@@ -9,6 +9,7 @@ import Bai1_c from "./week3_screen/Bai1_c";
 import Bai1_d from "./week3_screen/Bai1_d";
 import Bai1_e from "./week3_screen/Bai1_e";
 import Bai2_a from "./week3_screen/Bai2_a";
+import XMEye from "./week3_screen/XMEye";
 export default function App() {
   return (
     // <FirstScreen />
@@ -16,7 +17,8 @@ export default function App() {
     //<Bai1_b />
     // <Bai1_c />
     // <Bai1_d />
-    <Bai1_e />
+    // <Bai1_e />
     // <Bai2_a />
+    <XMEye />
   );
 }
