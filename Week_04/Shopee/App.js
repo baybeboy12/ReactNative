@@ -10,9 +10,9 @@ import Tiki_ok from "./Week_04_Screen/Tiki_ok";
 
 export default function App() {
   return (
-    //  <Bai2_a / >
+    //<Bai2_a />
     // <Bai2_b />
-    // <Bai2_c />
-    <Tiki_ok />
+    <Bai2_c />
+    // <Tiki_ok />
   );
 }

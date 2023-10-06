@@ -1,11 +1,43 @@
-import { StatusBar } from "expo-status-bar";
+import { StatusBar, Alert } from "react-native";
 import { StyleSheet, Text, View, Button, TextInput } from "react-native";
 import * as React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-
 export default function Bai2_a() {
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [loginStatus, setLoginStatus] = React.useState("");
+  const [alertMessage, setAlertMessage] = React.useState("");
+
+  var data = [
+    { username: "quangdung", password: "123" },
+    { username: "quangdung1", password: "123" },
+    { username: "quangdung2", password: "123" },
+  ];
+
+  const handleLogin = () => {
+    // Tìm kiếm trong danh sách người dùng để kiểm tra đăng nhập
+    const user = data.find(
+      (user) => user.username === username && user.password === password
+    );
+
+    if (user) {
+      setLoginStatus("Đăng nhập thành công");
+      setAlertMessage("Đăng nhập thành công!");
+      Alert.alert("Thông báo", "Đăng nhập thành công!");
+    } else {
+      setLoginStatus("Đăng nhập thất bại");
+      setAlertMessage(
+        "Đăng nhập thất bại. Vui lòng kiểm tra tên đăng nhập và mật khẩu."
+      );
+      Alert.alert(
+        "Thông báo",
+        "Đăng nhập thất bại. Vui lòng kiểm tra tên đăng nhập và mật khẩu."
+      );
+    }
+  };
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -21,9 +53,12 @@ export default function Bai2_a() {
           end={[0, 0]}
           style={styles.VName}
         >
-            
           <Icon name="user" size={40} style={{ marginLeft: 10 }}></Icon>
-          <TextInput defaultValue="Name" style={styles.Name}></TextInput>
+          <TextInput
+            defaultValue="Name"
+            style={styles.Name}
+            onChangeText={(text) => setUsername(text)}
+          ></TextInput>
         </LinearGradient>
         <LinearGradient
           colors={["#ffa500", "#ffa500"]}
@@ -32,13 +67,18 @@ export default function Bai2_a() {
           style={styles.VPassword}
         >
           <Icon name="lock" size={40} style={{ marginLeft: 10 }}></Icon>
-          <TextInput defaultValue="Password" style={styles.Password}></TextInput>
+          <TextInput
+            defaultValue="Password"
+            style={styles.Password}
+            onChangeText={(text) => setPassword(text)}
+            secureTextEntry={true} // Ẩn mật khẩu
+          ></TextInput>
           <Icon name="eye" size={40} style={{ marginLeft: 20 }}></Icon>
         </LinearGradient>
         <View style={styles.vbLOGIN}>
-          <button style={styles.Button}>LOGIN</button>
+          <Button title="LOGIN" onPress={handleLogin} style={styles.Button} />
         </View>
-        <Text style={styles.text}>CREATE ACCOUNT</Text>
+        <Text style={styles.text}>{loginStatus}</Text>
       </LinearGradient>
     </View>
   );
@@ -108,12 +148,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 50,
   },
-  Button:{
-    width: 330,
-    height: 45,
-    backgroundColor:"#0a0a0a",
-    color: "white",
-    fontSize: 20
+  Button: {
+    width: "100%",
+    height: "100%",
+    color: "black",
+    fontSize: 20,
   },
   text: {
     width: 260,

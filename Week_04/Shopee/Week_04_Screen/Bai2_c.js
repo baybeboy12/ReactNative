@@ -9,6 +9,7 @@ export default function Bai2_c() {
   const [isCheckedChuHoa, setIsCheckedChuHoa] = useState(false);
   const [isCheckedIncludeNumber, setIsCheckedIncludeNumber] = useState(false);
   const [isCheckedkitudacbiet, setIsCheckedkitudacbiet] = useState(false);
+  const [passwordLength, setPasswordLength] = useState(8); // Độ dài mặc định của mật khẩu
 
   const toggleCheckboxChuThuong = () => {
     setIsCheckedChuThuong(!isCheckedChuThuong);
@@ -17,24 +18,68 @@ export default function Bai2_c() {
   const toggleCheckboxChuHoa = () => {
     setIsCheckedChuHoa(!isCheckedChuHoa);
   };
+
   const toggleCheckboxIncludeNumber = () => {
     setIsCheckedIncludeNumber(!isCheckedIncludeNumber);
   };
+
   const toggleCheckboxkitudacbiet = () => {
     setIsCheckedkitudacbiet(!isCheckedkitudacbiet);
+  };
+
+  const generatePassword = () => {
+    const charset = [];
+
+    if (isCheckedChuThuong) {
+      charset.push("abcdefghijklmnopqrstuvwxyz");
+    }
+    if (isCheckedChuHoa) {
+      charset.push("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    }
+    if (isCheckedIncludeNumber) {
+      charset.push("0123456789");
+    }
+    if (isCheckedkitudacbiet) {
+      charset.push("!@#$%^&*()_+-=[]{}|;:,.<>?");
+    }
+
+    if (charset.length === 0) {
+      alert("Vui lòng chọn ít nhất một tùy chọn cho mật khẩu.");
+      return;
+    }
+
+    const password = [];
+    for (let i = 0; i < passwordLength; i++) {
+      const randomCharsetIndex = Math.floor(Math.random() * charset.length);
+      const selectedCharset = charset[randomCharsetIndex];
+      const randomCharIndex = Math.floor(
+        Math.random() * selectedCharset.length
+      );
+      const randomChar = selectedCharset[randomCharIndex];
+      password.push(randomChar);
+    }
+
+    return password.join("");
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.viewtong}>
         <Text style={styles.title}>PASSWORD GENERATOR</Text>
-        <TextInput style={styles.password}></TextInput>
+        <TextInput
+          style={styles.password}
+          value={generatePassword()}
+          editable={false}
+        />
         <View style={styles.chieudaipassword}>
           <View style={styles.viewCDPass}>
             <Text style={styles.textCDPass}>Password length</Text>
+            <TextInput
+              style={styles.textInPutCDPass}
+              value={passwordLength.toString()}
+              onChangeText={(text) => setPasswordLength(parseInt(text) || 0)}
+            />
           </View>
-
-          <TextInput style={styles.textInPutCDPass}></TextInput>
         </View>
         <View style={styles.chuthuong}>
           <Text style={styles.textchuthuong}>Include lower case letters</Text>
@@ -42,8 +87,8 @@ export default function Bai2_c() {
             <CheckBox
               checked={isCheckedChuThuong}
               onPress={toggleCheckboxChuThuong}
-              checkedColor="black" // Màu khi checkbox được chọn
-              uncheckedColor="white" // Màu khi checkbox chưa được chọn
+              checkedColor="black"
+              uncheckedColor="white"
             />
           </View>
         </View>
@@ -53,8 +98,8 @@ export default function Bai2_c() {
             <CheckBox
               checked={isCheckedChuHoa}
               onPress={toggleCheckboxChuHoa}
-              checkedColor="black" // Màu khi checkbox được chọn
-              uncheckedColor="white" // Màu khi checkbox chưa được chọn
+              checkedColor="black"
+              uncheckedColor="white"
             />
           </View>
         </View>
@@ -64,8 +109,8 @@ export default function Bai2_c() {
             <CheckBox
               checked={isCheckedIncludeNumber}
               onPress={toggleCheckboxIncludeNumber}
-              checkedColor="black" // Màu khi checkbox được chọn
-              uncheckedColor="white" // Màu khi checkbox chưa được chọn
+              checkedColor="black"
+              uncheckedColor="white"
             />
           </View>
         </View>
@@ -75,12 +120,16 @@ export default function Bai2_c() {
             <CheckBox
               checked={isCheckedkitudacbiet}
               onPress={toggleCheckboxkitudacbiet}
-              checkedColor="black" // Màu khi checkbox được chọn
-              uncheckedColor="white" // Màu khi checkbox chưa được chọn
+              checkedColor="black"
+              uncheckedColor="white"
             />
           </View>
         </View>
-        <button style={styles.Button}>GENERATE PASSWORD </button>
+        <Button
+          title="GENERATE PASSWORD"
+          onPress={() => {}}
+          style={styles.Button}
+        />
       </View>
     </View>
   );
@@ -119,7 +168,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     backgroundColor: "#151537",
     color: "white",
-    paddingLeft: 10, // Thêm padding cho nội dung trong TextInput
+    paddingLeft: 10,
   },
   chieudaipassword: {
     width: 280,
@@ -140,7 +189,7 @@ const styles = StyleSheet.create({
     height: 33,
     backgroundColor: "white",
     marginLeft: 50,
-    paddingLeft: 10, // Thêm padding cho nội dung trong TextInput
+    paddingLeft: 10,
   },
   chuthuong: {
     width: "90%",
@@ -233,7 +282,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#3B3B98",
     color: "white",
     fontSize: 18,
-
     textAlign: "center",
   },
 });
