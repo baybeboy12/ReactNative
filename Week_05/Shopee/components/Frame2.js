@@ -10,22 +10,19 @@ import {
 import * as React from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Image } from "react-native";
-import { useState } from "react";
+import { useState} from "react";
 import { useNavigation } from "@react-navigation/native";
 
-export default function Screen2({ navigation }) {
+export default function Frame2({ navigation }) {
   var [image, setImage] = useState(require("./image/xanh.jpg"));
-  const selectImage = (image) => {
-    navigation.navigate("Screen1", { selectedImage: image });
-  };
   return (
     <View style={styles.container}>
       <View style={styles.viewHinh}>
-          <Image
-            source={image}
-            style={{ width: 112, height: 132 }}
-            resizeMode="contain"
-          ></Image>
+        <Image
+          source={image}
+          style={{ width: 112, height: 132 }}
+          resizeMode="contain"
+        ></Image>
         <Text style={styles.TextName}>
           Điện Thoại Vsmart Joy 3 Hàng chính hãng
         </Text>
@@ -77,12 +74,11 @@ export default function Screen2({ navigation }) {
           }}
         ></Pressable>
         <Pressable
-          style={styles.btnXONG}
+          style={styles.btnDone}
           onPress={() =>
-            navigation.navigate("Screen1", { selectedImage: image })
+            navigation.navigate("Frame1", {selectedImage: image })
           }
-        >
-          XONG
+        ><Text>Xong</Text>
         </Pressable>
       </View>
     </View>
@@ -125,7 +121,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginLeft: -80,
   },
-  btnXONG: {
+  btnDone: {
     height: 44,
     width: 326,
     borderRadius: 10,

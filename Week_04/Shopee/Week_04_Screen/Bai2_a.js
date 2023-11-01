@@ -17,7 +17,6 @@ export default function Bai2_a() {
   ];
 
   const handleLogin = () => {
-    // Tìm kiếm trong danh sách người dùng để kiểm tra đăng nhập
     const user = data.find(
       (user) => user.username === username && user.password === password
     );
