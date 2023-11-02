@@ -7,8 +7,33 @@ import {
   TextInput,
   Pressable,
 } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useState, useEffect } from "react";
+export default function Screen1({ navigation }) {
+  var [data, setData] = useState([]);
+  var [name, setName] = useState("");
+  var [loginUser, setLoginUser] = useState();
 
-export default function App() {
+  useEffect(() => {
+    fetch(`https://6540984045bedb25bfc22306.mockapi.io/shop`)
+      .then((response) => response.json())
+      .then((json) => {
+        data = json;
+        setData(json);
+      });
+  }, []);
+
+  var handleLogin = () => {
+    var user = data.find((user) => user.name === name);
+    if (user) {
+      setLoginUser(user);
+      navigation.navigate("Screen2", { selectUser: user });
+    } else {
+      alert("Ten dang nhap khong dung");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Image
@@ -36,11 +61,14 @@ export default function App() {
           style={{ width: 20, height: 20, marginLeft: -100 }}
         ></Image>
         <TextInput
-          defaultValue="Enter Your Name"
+          placeholder="Enter your name"
           style={{ marginLeft: 10 }}
+          onChangeText={(text) => setName(text)}
         ></TextInput>
       </View>
-      <Pressable style={styles.btn}>GET STARTED -{">"}</Pressable>
+      <Pressable style={styles.btn} onPress={handleLogin}>
+        <Text>Get started</Text>
+      </Pressable>
     </View>
   );
 }
