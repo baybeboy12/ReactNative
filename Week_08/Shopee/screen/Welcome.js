@@ -43,6 +43,7 @@ export default function Welcome({ navigation }) {
           justifyContent: "center",
           marginTop: 60,
         }}
+        onPress={() => navigation.navigate("Shops Near Me")}
       >
         <Text
           style={{
